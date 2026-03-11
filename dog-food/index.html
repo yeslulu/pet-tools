@@ -25,6 +25,16 @@
   input:focus, select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-light); }
   .hint { font-size: 0.72rem; color: var(--text-light); margin-top: 8px; }
 
+  /* sources */
+  .sources-card h3 { font-size: 0.85rem; color: var(--accent); margin: 12px 0 6px; }
+  .sources-card h3:first-child { margin-top: 0; }
+  .sources-card ul { padding-left: 18px; margin: 0; }
+  .sources-card li { font-size: 0.75rem; color: var(--text-light); line-height: 1.8; }
+  .sources-card a { color: var(--accent); text-decoration: none; }
+  .sources-card a:hover { text-decoration: underline; }
+  .disclaimer { margin-top: 16px; padding: 12px; background: #fef9ef; border: 1px solid #f5e6d3; border-radius: 8px; font-size: 0.75rem; color: var(--text); line-height: 1.7; }
+  .update-date { display: inline-block; margin-top: 6px; font-size: 0.7rem; color: var(--text-light); }
+
   /* toggle */
   .toggle-row { display: flex; align-items: center; gap: 10px; padding-top: 4px; }
   .toggle { position: relative; width: 44px; height: 24px; flex-shrink: 0; }
@@ -372,16 +382,16 @@ const LIFE_STAGES = {
     label: '🐶 幼犬', css: 'stage-puppy', ageDesc: '< 1 歲',
     desc: '成長發育期，需要高蛋白、高鈣磷支持骨骼與肌肉發育。注意大型犬幼犬鈣質不可過量。',
     targets: {
-      protein: { min:56, max:130, unit:'g/1000kcal', label:'蛋白質', note:'AAFCO 最低 56g；鮮食通常 70~120g' },
-      fat:     { min:21, max:55, unit:'g/1000kcal', label:'脂肪', note:'幼犬需要較多能量密度' },
-      fiber:   { min:1, max:6, unit:'g/1000kcal', label:'膳食纖維', note:'幼犬不需太多纖維' },
-      calcium: { min:2000, max:4500, unit:'mg/1000kcal', label:'鈣', note:'大型犬幼犬注意上限' },
-      phosphorus: { min:1600, max:3500, unit:'mg/1000kcal', label:'磷', note:'Ca:P 1.0~1.8:1' },
+      protein: { min:56, max:130, unit:'g/1000kcal', label:'蛋白質', note:'AAFCO 最低 56g；鮮食通常 70~120g（無官方上限）' },
+      fat:     { min:21, max:55, unit:'g/1000kcal', label:'脂肪', note:'AAFCO 最低 21g；幼犬需要較多能量密度' },
+      fiber:   { min:1, max:6, unit:'g/1000kcal', label:'膳食纖維', note:'實務建議範圍（無官方標準）' },
+      calcium: { min:3000, max:4500, unit:'mg/1000kcal', label:'鈣', note:'NRC RA 3000mg；大型犬幼犬上限 4500mg' },
+      phosphorus: { min:2500, max:3500, unit:'mg/1000kcal', label:'磷', note:'Ca:P 1.0~1.8:1' },
     },
     macroAdvice: { protein: '≥30%', fat: '15~25%', carb: '≤40%' },
     supplements: [
-      { icon:'🦴', name:'鈣質補充', tag:'essential', text:'蛋殼粉或骨粉，支持骨骼發育。大型犬幼犬注意不可過量。' },
-      { icon:'🐟', name:'Omega-3 魚油', tag:'essential', text:'支持腦部與視力發育。建議 EPA+DHA 共 20~30mg/kg/天。' },
+      { icon:'🦴', name:'鈣質補充', tag:'essential', text:'蛋殼粉或骨粉，支持骨骼發育。大型犬幼犬注意不可過量（NRC 上限 4500mg/1000kcal）。' },
+      { icon:'🐟', name:'Omega-3 魚油', tag:'essential', text:'支持腦部與視力發育。NRC 建議 EPA+DHA ≥30mg/kg/天。' },
       { icon:'🌿', name:'犬用綜合維他命', tag:'essential', text:'補充維生素 A、D、E、B 群及微量元素。' },
       { icon:'🦠', name:'益生菌', tag:'recommend', text:'幫助消化系統建立健康菌相。' },
     ]
@@ -390,16 +400,16 @@ const LIFE_STAGES = {
     label: '🐕 成犬', css: 'stage-adult', ageDesc: '1~6 歲',
     desc: '維持期，營養均衡即可。結紮犬注意熱量控制，避免發胖。',
     targets: {
-      protein: { min:45, max:110, unit:'g/1000kcal', label:'蛋白質', note:'AAFCO 最低 45g；鮮食通常 60~100g' },
-      fat:     { min:14, max:45, unit:'g/1000kcal', label:'脂肪', note:'一般成犬適中即可' },
-      fiber:   { min:2, max:8, unit:'g/1000kcal', label:'膳食纖維', note:'維持腸道健康' },
-      calcium: { min:1000, max:1800, unit:'mg/1000kcal', label:'鈣', note:'Ca:P 1.2~1.4:1' },
-      phosphorus: { min:750, max:1400, unit:'mg/1000kcal', label:'磷', note:'均衡即可' },
+      protein: { min:45, max:110, unit:'g/1000kcal', label:'蛋白質', note:'AAFCO 最低 45g；鮮食通常 60~100g（無官方上限）' },
+      fat:     { min:14, max:45, unit:'g/1000kcal', label:'脂肪', note:'AAFCO 最低 13.8g；一般成犬適中即可' },
+      fiber:   { min:2, max:8, unit:'g/1000kcal', label:'膳食纖維', note:'實務建議範圍（無官方標準）' },
+      calcium: { min:1250, max:2500, unit:'mg/1000kcal', label:'鈣', note:'AAFCO 最低 1250mg；Ca:P 1.2~1.4:1' },
+      phosphorus: { min:1000, max:1600, unit:'mg/1000kcal', label:'磷', note:'AAFCO 最低 1000mg' },
     },
     macroAdvice: { protein: '≥25%', fat: '15~25%', carb: '≤45%' },
     supplements: [
       { icon:'🦴', name:'鈣質補充', tag:'essential', text:'蛋殼粉（½ 茶匙 ≈ 900mg 鈣）或骨粉。鮮食必備。' },
-      { icon:'🐟', name:'Omega-3 魚油', tag:'recommend', text:'抗發炎、護膚毛。EPA+DHA 共 20~30mg/kg/天。' },
+      { icon:'🐟', name:'Omega-3 魚油', tag:'recommend', text:'抗發炎、護膚毛。NRC 建議 EPA+DHA ≥30mg/kg/天。' },
       { icon:'🌿', name:'犬用綜合維他命', tag:'essential', text:'長期鮮食務必補充微量營養素。' },
     ]
   },
@@ -407,16 +417,16 @@ const LIFE_STAGES = {
     label: '🐕‍🦺 熟齡犬', css: 'stage-mature', ageDesc: '7~9 歲',
     desc: '開始老化，蛋白質需求漸增以維持肌肉量，脂肪適度控制。',
     targets: {
-      protein: { min:60, max:120, unit:'g/1000kcal', label:'蛋白質', note:'漸增蛋白質防止肌少；鮮食通常 70~110g' },
-      fat:     { min:14, max:40, unit:'g/1000kcal', label:'脂肪', note:'適度控制' },
-      fiber:   { min:3, max:10, unit:'g/1000kcal', label:'膳食纖維', note:'幫助腸道蠕動' },
-      calcium: { min:1000, max:1800, unit:'mg/1000kcal', label:'鈣', note:'Ca:P 1.2~1.4:1' },
-      phosphorus: { min:750, max:1400, unit:'mg/1000kcal', label:'磷', note:'腎功能下降時需注意' },
+      protein: { min:60, max:120, unit:'g/1000kcal', label:'蛋白質', note:'Laflamme (2005)：漸增蛋白質防肌少；鮮食通常 70~110g' },
+      fat:     { min:14, max:40, unit:'g/1000kcal', label:'脂肪', note:'AAFCO 最低 13.8g；適度控制' },
+      fiber:   { min:3, max:10, unit:'g/1000kcal', label:'膳食纖維', note:'實務建議範圍（無官方標準）' },
+      calcium: { min:1250, max:2500, unit:'mg/1000kcal', label:'鈣', note:'AAFCO 最低 1250mg；Ca:P 1.2~1.4:1' },
+      phosphorus: { min:1000, max:1600, unit:'mg/1000kcal', label:'磷', note:'腎功能下降時需由獸醫評估' },
     },
     macroAdvice: { protein: '≥28%', fat: '12~22%', carb: '≤40%' },
     supplements: [
       { icon:'🦴', name:'鈣質補充', tag:'essential', text:'蛋殼粉或骨粉。鮮食必備。' },
-      { icon:'🐟', name:'Omega-3 魚油', tag:'essential', text:'抗發炎、護關節。EPA+DHA 共 30~50mg/kg/天。' },
+      { icon:'🐟', name:'Omega-3 魚油', tag:'essential', text:'抗發炎、護關節。建議 EPA+DHA 50~100mg/kg/天（CSU VTH）。' },
       { icon:'🌿', name:'犬用綜合維他命', tag:'essential', text:'補充維生素 A、D、E、B 群及微量元素。' },
       { icon:'🦵', name:'葡萄糖胺/軟骨素', tag:'recommend', text:'開始保養關節，預防退化。' },
       { icon:'🦠', name:'益生菌', tag:'recommend', text:'支持漸弱的消化機能。' },
@@ -426,16 +436,16 @@ const LIFE_STAGES = {
     label: '👴 高齡犬', css: 'stage-senior', ageDesc: '10 歲以上',
     desc: '高蛋白防肌少、高纖維助消化、關節與腦部保養是重點。',
     targets: {
-      protein: { min:70, max:130, unit:'g/1000kcal', label:'蛋白質', note:'高齡犬需高蛋白防肌少；鮮食通常 80~120g' },
-      fat:     { min:12, max:38, unit:'g/1000kcal', label:'脂肪', note:'減重期控制在低範圍' },
-      fiber:   { min:4, max:12, unit:'g/1000kcal', label:'膳食纖維', note:'促進腸胃蠕動、增加飽足感' },
-      calcium: { min:1000, max:1800, unit:'mg/1000kcal', label:'鈣', note:'Ca:P 1.2~1.4:1' },
-      phosphorus: { min:750, max:1400, unit:'mg/1000kcal', label:'磷', note:'腎功能不佳時需限制' },
+      protein: { min:70, max:130, unit:'g/1000kcal', label:'蛋白質', note:'Laflamme (2012)：高齡犬需高蛋白防肌少；鮮食通常 80~120g' },
+      fat:     { min:14, max:38, unit:'g/1000kcal', label:'脂肪', note:'AAFCO 最低 13.8g；減重期控制在低範圍' },
+      fiber:   { min:4, max:12, unit:'g/1000kcal', label:'膳食纖維', note:'實務建議範圍；增加飽足感' },
+      calcium: { min:1250, max:2500, unit:'mg/1000kcal', label:'鈣', note:'AAFCO 最低 1250mg；Ca:P 1.2~1.4:1' },
+      phosphorus: { min:1000, max:1600, unit:'mg/1000kcal', label:'磷', note:'CKD 犬需由獸醫評估磷攝取量' },
     },
     macroAdvice: { protein: '≥30%', fat: '10~20%', carb: '≤40%' },
     supplements: [
       { icon:'🦴', name:'鈣質補充', tag:'essential', text:'蛋殼粉（½ 茶匙 ≈ 900mg 鈣）或骨粉。鮮食最容易缺鈣。' },
-      { icon:'🐟', name:'Omega-3 魚油', tag:'essential', text:'抗發炎、護關節、護腦。EPA+DHA 共 30~50mg/kg/天。' },
+      { icon:'🐟', name:'Omega-3 魚油', tag:'essential', text:'抗發炎、護關節、護腦。建議 EPA+DHA 50~100mg/kg/天（CSU VTH）。' },
       { icon:'🌿', name:'犬用綜合維他命', tag:'essential', text:'維生素 A、D、E、B 群、鋅、鐵、碘、硒等。' },
       { icon:'🦠', name:'益生菌', tag:'essential', text:'高齡犬腸道菌相改變，幫助消化吸收。' },
       { icon:'🦵', name:'葡萄糖胺/軟骨素', tag:'essential', text:'保護關節軟骨，減緩退化性關節炎。' },
@@ -904,5 +914,46 @@ function init() {
 
 init();
 </script>
+
+<!-- 資料來源與免責聲明 -->
+<div class="card sources-card">
+  <h2>📚 資料來源與參考文獻</h2>
+  <div class="source-section">
+    <h3>營養標準</h3>
+    <ul>
+      <li><a href="https://nap.nationalacademies.org/catalog/10668/nutrient-requirements-of-dogs-and-cats" target="_blank">NRC (2006) Nutrient Requirements of Dogs and Cats</a> — 犬貓營養學黃金標準</li>
+      <li><a href="https://www.aafco.org/nutritional-guidelines/" target="_blank">AAFCO Dog Food Nutrient Profiles (2024)</a> — 美國飼料管理協會營養標準</li>
+      <li><a href="https://europeanpetfood.org/wp-content/uploads/2024/09/FEDIAF-Nutritional-Guidelines_2024.pdf" target="_blank">FEDIAF Nutritional Guidelines (2024)</a> — 歐洲寵物食品營養指南</li>
+    </ul>
+    <h3>學術研究</h3>
+    <ul>
+      <li>Laflamme DP (2005). Nutrition for aging cats and dogs. <em>Vet Clin North Am Small Anim Pract</em>. <a href="https://pubmed.ncbi.nlm.nih.gov/15833567/" target="_blank">PubMed</a></li>
+      <li>Laflamme DP (2012). Nutritional care for aging cats and dogs. <em>Vet Clin North Am Small Anim Pract</em>. <a href="https://pubmed.ncbi.nlm.nih.gov/22720813/" target="_blank">PubMed</a></li>
+      <li>German AJ (2006). The growing problem of obesity in dogs and cats. <em>J Nutr</em>. <a href="https://pubmed.ncbi.nlm.nih.gov/16614358/" target="_blank">PubMed</a></li>
+      <li>Bauer JE (2011). Therapeutic use of fish oils in companion animals. <em>JAVMA</em>. <a href="https://pubmed.ncbi.nlm.nih.gov/21916754/" target="_blank">PubMed</a></li>
+    </ul>
+    <h3>實務工具</h3>
+    <ul>
+      <li><a href="https://secure.balanceit.com/" target="_blank">BalanceIT</a> — UC Davis 獸醫營養學團隊開發的鮮食配方工具</li>
+      <li><a href="https://vetmedbiosci.colostate.edu/vth/services/orthopedic-medicine/fish-oil-dosing/" target="_blank">CSU VTH Fish Oil Dosing Chart</a> — 科羅拉多州立大學魚油劑量建議</li>
+      <li><a href="https://petnutritionalliance.org/" target="_blank">Pet Nutrition Alliance</a> — RER/DER 計算參考</li>
+    </ul>
+    <h3>食材數據</h3>
+    <ul>
+      <li><a href="https://consumer.fda.gov.tw/Food/TFND.aspx?nodeID=178" target="_blank">衛福部食品營養成分資料庫</a> — 台灣食材營養數據</li>
+      <li><a href="https://fdc.nal.usda.gov/" target="_blank">USDA FoodData Central</a> — 美國農業部食品數據</li>
+    </ul>
+  </div>
+  <div class="disclaimer">
+    <strong>⚠️ 免責聲明</strong><br>
+    本工具僅供參考，不能取代獸醫師的專業建議。蛋白質、脂肪的上限為鮮食實務範圍，並非毒性上限。纖維為實務建議值，非官方標準。患有腎臟病（CKD）、胰臟炎等疾病的狗狗，請務必遵循獸醫師的個別營養處方。每隻狗的需求可相差達 50%，請定期評估體態分數（BCS）並調整。
+    <br><span class="update-date">數據最後驗證：2026-03-11｜來源：NRC 2006 / AAFCO 2024 / FEDIAF 2024 / PubMed</span>
+  </div>
+</div>
+
+<div style="text-align:center; padding:16px 0; color:var(--text-light); font-size:0.75rem;">
+  由 CHEWY 蚯蚓工作室 🍞 提供 ｜ <a href="https://www.chewystudio.tw/" target="_blank" style="color:var(--accent)">chewystudio.tw</a>
+</div>
+
 </body>
 </html>
